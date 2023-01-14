@@ -16,6 +16,7 @@ class S21Matrix {
         S21Matrix operator+(const S21Matrix &other);
         S21Matrix operator-(const S21Matrix &other);
         S21Matrix operator*(const S21Matrix &other);
+        S21Matrix operator*(const double num);
         bool operator==(const S21Matrix &other);
         S21Matrix operator=(const S21Matrix &other);
         S21Matrix operator+=(const S21Matrix &other);
@@ -33,6 +34,8 @@ class S21Matrix {
         S21Matrix CalcComplements();
         double Determinant();
         S21Matrix InverseMatrix();
+        void getMinor(int row, int col, S21Matrix* other);
+        double S21Matrix::get_Determinant(S21Matrix* eto);
 
         void Create();
         void Remove();
