@@ -1,6 +1,7 @@
 #include "s21_matrix_oop.h"
 
 void S21Matrix::Create() {
+  matrix_ = new double*[this->rows_];
   for (int row = 0; row < rows_; row++) {
     matrix_[row] = new double[cols_];
   }
@@ -80,6 +81,8 @@ void S21Matrix::setRows(int const row) {
     }
   }
 }
+
+int S21Matrix::getCols() const { return cols_; }
 
 void S21Matrix::setCols(int const col) {
   if (col < 1) {
@@ -211,7 +214,7 @@ S21Matrix S21Matrix::CalcComplements() {
     for (int col = 0; col < cols_; ++col) {
       S21Matrix minor(rows_, cols_);
       get_Determinant(&minor);
-      this->matrix_[row][col] = pow(-1, (row + col)) * Determinant();
+      matrix_[row][col] = pow(-1, (row + col)) * Determinant();
     }
   }
   return *this;

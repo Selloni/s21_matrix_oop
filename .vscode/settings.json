@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "new": "cpp"
-    }
+        "new": "cpp",
+        "iostream": "cpp"
+    },
+    "editor.tabSize": 2
 }
