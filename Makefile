@@ -1,6 +1,6 @@
 G =gcc -lstdc++
 GCC =$(G) -Wall -Wextra -Werror -Wuninitialized  #проверка на инициализацию
-LIBS =-lgtest -lgmock -pthread
+LIBS =-lgtest 
 LINUX=-lsubunit -lrt -lpthread -lm
 OS=$(shell uname -s)
 
@@ -9,7 +9,7 @@ ifeq ($(OS), Darwin)
 endif
 ifeq ($(OS), Linux)
 	G+= -D OS_LINUX
-	TESTFLAGS+= -lgmock -pthread
+	LIBS+= -lgmock -pthread
 endif
 
 all: clean s21_matrix_oop.a 
@@ -25,8 +25,19 @@ test: clean s21_matrix_oop.a
 	$(GCC) s21_matrix_oop.a gtest.cpp -o test $(LIBS)
 	./test
 
+gcove_report: 
+	$(GCC) --coverage gtest.cpp s21_*.cpp -o test $(LIBS)
+	chmod +x *
+	./test
+	lcov -t "test" -o test.info --no-external -c -d .
+	genhtml -o report/ test.info
+	open ./report/index.html
+
 valgrind:
 	valgrind --leak-check=full --track-origins=yes --trace-children=yes -s ./test
+
+lo:
+	for i in `seq 10 $(OP)`;	do ./test; done;
 
 clang:
 	@echo -------------------CLANG_FORMAT------------------------
@@ -50,7 +61,10 @@ dbg:
 
 clean:
 	@echo ".....(-_(С_С)_-)....чисто..."
-	@rm -rf s21_*.o
+	@rm -rf s21_*o
 	@rm -rf *.a
 	@rm -rf a.out*
+	@rm -rf gtest.*o
+	@rm -rf report
 	@rm -rf test*
+	@rm -rf *.gcda

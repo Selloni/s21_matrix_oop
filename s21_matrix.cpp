@@ -105,23 +105,23 @@ void S21Matrix::setCols(int const col) {
 ////             matrix             ////
 ///////////////////////////////////////
 
-bool S21Matrix::EqMatrix(const S21Matrix& other) {
-  bool check = true;
+bool S21Matrix::EqMatrix(const S21Matrix &other) {
+  bool equal = true;
   if (this == &other) {
     return true;
-  } else if (rows_ != other.getRows() && cols_ != other.getCols()) {
-    return false;
+  }
+    if (rows_ != other.rows_ || cols_ != other.cols_) {
+    equal = false;
   } else {
-    bool check = true;
-    for (int row = 0; row < rows_ && check; ++row) {
-      for (int col = 0; col < cols_ && check; ++col) {
-        if (this->matrix_[row][col] != other.matrix_[row][col]) {
-          check = false;
+    for (int row = 0; row < rows_; row++) {
+      for (int col = 0; col < cols_ && equal ; col++) {
+        if (fabs(matrix_[row][col] - other(row, col)) >= 1e-6) {
+          equal = false;
         }
       }
     }
   }
-  return check;
+  return equal;
 }
 
 
@@ -141,6 +141,7 @@ bool S21Matrix::EqMatrix(const S21Matrix& other) {
 //     }
 //     return result;
 // }
+
 
 void S21Matrix::SumMatrix(const S21Matrix& other) {
   if (rows_ != other.getRows() || cols_ != other.getCols()) {

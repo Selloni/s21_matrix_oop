@@ -4,6 +4,7 @@
 
 #include <cmath>
 #include <iostream>
+using namespace std;
 
 class S21Matrix {
  public:
