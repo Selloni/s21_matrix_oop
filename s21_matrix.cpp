@@ -106,7 +106,7 @@ void S21Matrix::setCols(int const col) {
 ///////////////////////////////////////
 
 bool S21Matrix::EqMatrix(const S21Matrix& other) {
-  bool equal = true;
+  bool check = true;
   if (this == &other) {
     return true;
   } else if (rows_ != other.getRows() && cols_ != other.getCols()) {
@@ -114,16 +114,33 @@ bool S21Matrix::EqMatrix(const S21Matrix& other) {
   } else {
     bool check = true;
     for (int row = 0; row < rows_ && check; ++row) {
-      for (int col = 0; col < cols_; ++col) {
-        if (fabs(matrix_[row][col] - other(row, col)) >= 1e-6) {
-          equal = false;
+      for (int col = 0; col < cols_ && check; ++col) {
+        if (this->matrix_[row][col] != other.matrix_[row][col]) {
           check = false;
         }
       }
     }
   }
-  return equal;
+  return check;
 }
+
+
+// bool S21Matrix::eq_matrix(const S21Matrix& other) {
+//     bool result = false;
+//     if (this == &other) {
+//         result = true;
+//     } else if (this->isEqualSize(other)) {
+//         result = true;
+//         for (auto row = 0; row < this->rows_ && result; row++) {
+//             for (auto col = 0; col < this->cols_ && result; col++) {
+//                 if (this->matrix_[row][col] != other.matrix_[row][col]) {
+//                     result = false;
+//                 }
+//             }
+//         }
+//     }
+//     return result;
+// }
 
 void S21Matrix::SumMatrix(const S21Matrix& other) {
   if (rows_ != other.getRows() || cols_ != other.getCols()) {
@@ -162,14 +179,13 @@ void S21Matrix::MulMatrix(const S21Matrix& other) {
         "to rows of second matrix!");
   }
   S21Matrix result(this->rows_, other.getCols());
-  for (int i = 0; i < result.getRows(); i++) {
-    for (int j = 0; j < result.getCols(); j++) {
-      for (int k = 0; k < other.getRows(); k++) {
-        result(i, j) += this->matrix_[i][k] * other(k, j);
+  for (int i = 0; i < result.rows_; i++) {
+    for (int j = 0; j < result.cols_; j++) {
+      for (int k = 0; k < other.rows_; k++) {
+        result(i, j) += matrix_[i][k] * other(k, j);
       }
     }
   }
-  this->setCols(other.getCols());  //////////// question
   this->Copy(result);
 }
 

@@ -21,8 +21,9 @@ build_s21_matrix:
 	ar rcs s21_matrix_oop.a s21_*.o
 	ranlib s21_matrix_oop.a
 
-test: s21_matrix_oop.a
+test: clean s21_matrix_oop.a
 	$(GCC) s21_matrix_oop.a gtest.cpp -o test $(LIBS)
+	./test
 
 valgrind:
 	valgrind --leak-check=full --track-origins=yes --trace-children=yes -s ./test
