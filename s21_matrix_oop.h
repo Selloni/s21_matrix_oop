@@ -3,9 +3,8 @@
 #pragma once
 
 #include <cmath>
-#include <iostream>
-
 #include <cstring>
+#include <iostream>
 
 using namespace std;
 
