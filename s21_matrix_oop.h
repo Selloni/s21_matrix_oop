@@ -43,6 +43,7 @@ class S21Matrix {
 
   S21Matrix Transpose();
   S21Matrix CalcComplements();
+  S21Matrix MinorMatrix(int rows, int col);
   double Determinant();
   S21Matrix InverseMatrix();
 
@@ -55,8 +56,6 @@ class S21Matrix {
   void Create();
   void Remove();
   void Copy(const S21Matrix &other);
-  void getMinor(int row, int col, S21Matrix *other);
-  double get_Determinant(S21Matrix *eto);
 };
 
 // #endif  //  SRC_S21_MATRIX_OOP_H_

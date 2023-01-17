@@ -1,5 +1,4 @@
 G =gcc -lstdc++
-# G=g++
 GCC =$(G) -Wall -Wextra -Werror -Wuninitialized  #проверка на инициализацию
 LIBS =-lgtest 
 LINUX=-lsubunit -lrt -lpthread -lm
@@ -24,8 +23,7 @@ build_s21_matrix:
 
 test: clean s21_matrix_oop.a
 	$(GCC) -g s21_matrix_oop.a gtest.cpp -o test $(LIBS)
-	./test
-# --gtest_repeat=10 --gtest_break_on_failure
+	./test --gtest_repeat=10 --gtest_break_on_failure
 
 gcove_report: clean
 	$(GCC) --coverage gtest.cpp s21_*.cpp -o test $(LIBS)
@@ -38,8 +36,8 @@ gcove_report: clean
 valgrind:
 	valgrind --leak-check=full --track-origins=yes --trace-children=yes -s ./test
 
-lo:
-	for i in `seq 10 $(OP)`;	do ./test; done;
+# lo:
+# 	for i in `seq 10 $(OP)`;	do ./test; done;
 
 clang:
 	@echo -------------------CLANG_FORMAT------------------------
