@@ -1,5 +1,5 @@
 G =g++ -lgtest -std=c++17
-GCC =$(G) -Wall -Wextra -Werror -Wuninitialized
+GCC =$(G) -Wall -Wextra -Werror -Wuninitialized  #проверка на инициализацию
 LIBS =-lgtest 
 LINUX=-lsubunit -lrt -lpthread -lm
 OS=$(shell uname -s)
@@ -41,10 +41,17 @@ valgrind:
 
 # clang:
 # 	@echo -------------------CLANG_FORMAT------------------------
-# 	@cp ../materials/linters/.clang-format .clang-format
-# 	clang-format -n s21_*.cpp s21_*.h gtest.cpp
-# 	clang-format -i s21_*.cpp s21_*.h gtest.cpp
-# 	@rm .clang-format
+# # @cp ../materials/linters/.clang-format .clang-format
+# 	@clang-format -n s21_*.cpp s21_*.h gtest.cpp
+# 	@clang-format -i s21_*.cpp s21_*.h gtest.cpp
+# # @rm .clang-format
+# 	@make leak
+
+# leak:
+# 	@echo --------------------MEMORY_LEAKS-----------------------
+# 	$(GCC) gtest.cpp s21_*.cpp -lgtest -o leaks -g
+# 	CK_FORK=no leaks --atExit -- ./leaks
+# 	@rm ./leaks
 
 dbg:
 	$(GCC) s21_main.cpp s21_matrix.cpp s21_operator.cpp  -g
