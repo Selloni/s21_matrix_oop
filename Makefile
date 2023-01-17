@@ -1,4 +1,5 @@
 G =gcc -lstdc++
+# G=g++
 GCC =$(G) -Wall -Wextra -Werror -Wuninitialized  #проверка на инициализацию
 LIBS =-lgtest 
 LINUX=-lsubunit -lrt -lpthread -lm
@@ -22,10 +23,11 @@ build_s21_matrix:
 	ranlib s21_matrix_oop.a
 
 test: clean s21_matrix_oop.a
-	$(GCC) s21_matrix_oop.a gtest.cpp -o test $(LIBS)
+	$(GCC) -g s21_matrix_oop.a gtest.cpp -o test $(LIBS)
 	./test
+# --gtest_repeat=10 --gtest_break_on_failure
 
-gcove_report: 
+gcove_report: clean
 	$(GCC) --coverage gtest.cpp s21_*.cpp -o test $(LIBS)
 	chmod +x *
 	./test
@@ -57,7 +59,7 @@ clang:
 # 	cppcheck --enable=all --suppress=missingIncludeSystem *.cpp
 
 dbg:
-	$(GCC) main.cpp s21_matrix.cpp s21_operator.cpp  -g
+	$(GCC) s21_main.cpp s21_matrix.cpp s21_operator.cpp  -g
 
 clean:
 	@echo ".....(-_(С_С)_-)....чисто..."

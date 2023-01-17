@@ -13,11 +13,11 @@
 //     }
 //   }
 //   m1.MulMatrix(m2);
-//   if(m1.EqMatrix(m3)) {
-//     cout << 't';
-//   } else {
-//     cout << 'f';
-//   }
-
+//     if(m1 == m3) {
+//       cout << 't' << "\n";
+//     } else {
+//       cout << 'f' << "\n";
+//     }
+//   cout << "\n";
 //   return 0; 
 // }

@@ -4,6 +4,9 @@
 
 #include <cmath>
 #include <iostream>
+
+#include <cstring>
+
 using namespace std;
 
 class S21Matrix {
@@ -42,6 +45,8 @@ class S21Matrix {
   S21Matrix CalcComplements();
   double Determinant();
   S21Matrix InverseMatrix();
+
+  // void resizeMatrix(int rows, int cols);
 
  private:
   int rows_, cols_;

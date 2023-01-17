@@ -82,6 +82,22 @@ void S21Matrix::setRows(int const row) {
   }
 }
 
+// void S21Matrix::setRows(const int rows) {
+//     if (rows < 1)
+//         throw std::out_of_range("Error: Wrong rows size");
+//     if (rows != this->rows_)
+//         this->resizeMatrix(rows, this->cols_);
+// }
+
+// void S21Matrix::resizeMatrix(int rows, int cols) {
+//     S21Matrix new_matrix(rows, cols);
+//     int min_rows = (rows < this->rows_) ? rows : this->rows_;
+//     int min_cols = (cols < this->cols_) ? cols : this->cols_;
+//     for (auto row = 0; row < min_rows; row++)
+//         std::memcpy(new_matrix.matrix_[row], this->matrix_[row], min_cols * sizeof(double));
+//     *this = new_matrix;
+// }
+
 int S21Matrix::getCols() const { return cols_; }
 
 void S21Matrix::setCols(int const col) {
@@ -106,42 +122,21 @@ void S21Matrix::setCols(int const col) {
 ///////////////////////////////////////
 
 bool S21Matrix::EqMatrix(const S21Matrix &other) {
-  bool equal = true;
-  if (this == &other) {
-    return true;
-  }
-    if (rows_ != other.rows_ || cols_ != other.cols_) {
-    equal = false;
-  } else {
-    for (int row = 0; row < rows_; row++) {
-      for (int col = 0; col < cols_ && equal ; col++) {
-        if (fabs(matrix_[row][col] - other(row, col)) >= 1e-6) {
-          equal = false;
+    bool return_value = true;
+    if (rows_ == other.rows_ && cols_ == other.cols_) {
+        for (int i = 0; i < rows_ && return_value; i++) {
+            for (int j = 0; j < cols_; j++) {
+                if (fabs(matrix_[i][j] - other.matrix_[i][j]) > 1e-7) {
+                    return_value = false;
+                    break;
+                }
+            }
         }
-      }
+    } else {
+        return_value = false;
     }
-  }
-  return equal;
+    return return_value;
 }
-
-
-// bool S21Matrix::eq_matrix(const S21Matrix& other) {
-//     bool result = false;
-//     if (this == &other) {
-//         result = true;
-//     } else if (this->isEqualSize(other)) {
-//         result = true;
-//         for (auto row = 0; row < this->rows_ && result; row++) {
-//             for (auto col = 0; col < this->cols_ && result; col++) {
-//                 if (this->matrix_[row][col] != other.matrix_[row][col]) {
-//                     result = false;
-//                 }
-//             }
-//         }
-//     }
-//     return result;
-// }
-
 
 void S21Matrix::SumMatrix(const S21Matrix& other) {
   if (rows_ != other.getRows() || cols_ != other.getCols()) {
@@ -201,7 +196,7 @@ S21Matrix S21Matrix::Transpose() {
 }
 
 /////////////////////////////////////////
-////          сомнительно           ////
+////          ===========           ////
 ///////////////////////////////////////
 
 void S21Matrix::getMinor(int row, int col, S21Matrix* other) {
