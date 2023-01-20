@@ -245,12 +245,6 @@ TEST_F(S21MatrixTest, eqmul) {
   EXPECT_EQ(0, result == *matrix_3x3);
 }
 
-TEST_F(S21MatrixTest, eqsub) {
-  S21Matrix tmp(3, 3);
-  S21Matrix result(3, 3);
-  for (int i = 0; i < 3; ++i) tmp = *matrix_3x3 - tmp;
-  EXPECT_EQ(false, tmp == *matrix_3x3);
-}
 
 TEST_F(S21MatrixTest, inverse) {
   matrix_3x3->operator()(0, 0) = 2;

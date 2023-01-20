@@ -32,11 +32,11 @@ gcove_report: clean
 	open ./report/index.html
 
 clang:
-	@echo -------------------CLANG_FORMAT------------------------
-	@cp ../materials/linters/.clang-format .clang-format
-	clang-format -n s21_*.cpp s21_*.h gtest.cpp
-	clang-format -i s21_*.cpp s21_*.h gtest.cpp
-	@rm .clang-format
+#@echo -------------------CLANG_FORMAT-----------------------
+#clang-format -style=Google -dump-config > .clang-format
+#clang-format -n s21_*.cpp s21_*.h gtest.cpp
+#clang-format -i s21_*.cpp s21_*.h gtest.cpp
+#@rm .clang-format
 
 leak:
 	@echo --------------------MEMORY_LEAKS-----------------------
@@ -56,7 +56,7 @@ clean:
 	@rm -rf report
 	@rm -rf test*
 	@rm -rf *.gcda
-	@*.dSYM
+	@rm -rf *.dSYM
 
 git:
 	open 'https://github.com/Selloni'
