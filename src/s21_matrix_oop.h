@@ -39,6 +39,7 @@ class S21Matrix {
   void setRows(const int row);
   int getCols() const;
   void setCols(const int col);
+  void Copy(const S21Matrix &other);
 
   S21Matrix Transpose();
   S21Matrix CalcComplements();
@@ -46,15 +47,12 @@ class S21Matrix {
   double Determinant();
   S21Matrix InverseMatrix();
 
-  // void resizeMatrix(int rows, int cols);
-
  private:
   int rows_, cols_;
   double **matrix_;
 
   void Create();
   void Remove();
-  void Copy(const S21Matrix &other);
 };
 
 // #endif  //  SRC_S21_MATRIX_OOP_H_

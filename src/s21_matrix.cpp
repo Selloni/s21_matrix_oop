@@ -73,6 +73,7 @@ void S21Matrix::setRows(int const row) {
   Remove();
   rows_ = row;
   cols_ = tmp.getCols();
+  Create();
   for (int row = 0; row < rows_; row++) {
     for (int col = 0; col < cols_; col++) {
       if (row < tmp.getRows()) {
@@ -92,6 +93,7 @@ void S21Matrix::setCols(int const col) {
   Remove();
   cols_ = col;
   rows_ = tmp.getRows();
+  Create();
   for (int row = 0; row < rows_; row++) {
     for (int col = 0; col < cols_; col++) {
       if (row < tmp.getCols()) {
@@ -100,6 +102,18 @@ void S21Matrix::setCols(int const col) {
     }
   }
 }
+
+// void S21Matrix::setCols(int const col) {
+//   if (col < 1)
+//     throw std::out_of_range("setCols: 'cols' element less or equal zero!");
+
+//   for (int row = 0; row < this.rows_; row++) {
+//     for (int i = 0; i < col; col++) {
+
+//     }
+//   }
+
+// }
 
 /////////////////////////////////////////
 ////             matrix             ////
@@ -147,7 +161,7 @@ void S21Matrix::SubMatrix(const S21Matrix& other) {
 void S21Matrix::MulNumber(const double num) {
   for (int row = 0; row < rows_; ++row) {
     for (int col = 0; col < cols_; ++col) {
-      this->matrix_[row][col] *= num;
+      matrix_[row][col] *= num;
     }
   }
 }

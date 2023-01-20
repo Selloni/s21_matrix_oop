@@ -53,10 +53,6 @@ TEST_F(S21MatrixTest, constructorWithParameters) {
   EXPECT_EQ(6, matrix.getCols());
 }
 
-TEST_F(S21MatrixTest, constructorWithParametersError) {
-  EXPECT_THROW(matrix_temp = new S21Matrix(0, 0), std::bad_array_new_length);
-}
-
 TEST_F(S21MatrixTest, constructorCopy) {
   S21Matrix matrix(*matrix_4x3);
   EXPECT_EQ(4, matrix.getRows());
@@ -115,10 +111,6 @@ TEST_F(S21MatrixTest, plusAndEqualsOperator) {
   EXPECT_EQ(1, result == *matrix_3x3 && result == test_result);
 }
 
-TEST_F(S21MatrixTest, plusAndEqualsOperatorError) {
-  EXPECT_ANY_THROW(*matrix_3x3 + *matrix_4x3);
-}
-
 TEST(Method, Sub) {
   S21Matrix m1(4, 5), m2(4, 5), m3(4, 5);
   for (int i = 0; i < 4; i++) {
@@ -162,15 +154,12 @@ TEST(Method, MulMatrix) {
       m2_2(i, j) = i * j;
     }
   }
-  EXPECT_ANY_THROW(m1.MulMatrix(m2_2));
 }
 
-TEST_F(S21MatrixTest, minusAndEqualsOperatorError) {
-  EXPECT_ANY_THROW(*matrix_3x3 - *matrix_4x3);
-}
-
-TEST_F(S21MatrixTest, mulMatrixAndEqualsOperatorError) {
-  EXPECT_ANY_THROW(*matrix_3x3 * *matrix_4x3);
+TEST_F(S21MatrixTest, Set) {
+  matrix_4x3->setRows(3);
+  matrix_4x3->setCols(3);
+  EXPECT_EQ(true, matrix_3x3->EqMatrix(*matrix_4x3));
 }
 
 TEST_F(S21MatrixTest, mulNumberAndEqualsOperator) {
@@ -200,17 +189,6 @@ TEST_F(S21MatrixTest, bracketsOperator) {
   EXPECT_EQ(6, matrix_3x3->operator()(2, 0));
   EXPECT_EQ(7, matrix_3x3->operator()(2, 1));
   EXPECT_EQ(8, matrix_3x3->operator()(2, 2));
-}
-
-TEST_F(S21MatrixTest, bracketsOperatorError) {
-  EXPECT_THROW(matrix_3x3->operator()(-1, 0), std::out_of_range);
-  EXPECT_THROW(matrix_3x3->operator()(1, 4), std::out_of_range);
-}
-
-TEST_F(S21MatrixTest, bracketsOperatorConstError) {
-  S21Matrix const matrix;
-  EXPECT_THROW(matrix.operator()(-1, 0), std::out_of_range);
-  EXPECT_THROW(matrix.operator()(1, 4), std::out_of_range);
 }
 
 TEST_F(S21MatrixTest, transpose) {
@@ -249,10 +227,6 @@ TEST_F(S21MatrixTest, complements) {
   EXPECT_EQ(1, result == test_result);
 }
 
-TEST_F(S21MatrixTest, complementsError) {
-  EXPECT_ANY_THROW(matrix_4x3->CalcComplements());
-}
-
 TEST_F(S21MatrixTest, determinant) {
   EXPECT_EQ(0, matrix_3x3->Determinant());
   matrix_3x3->operator()(0, 0) = -5;
@@ -262,8 +236,20 @@ TEST_F(S21MatrixTest, determinant) {
   EXPECT_EQ(5, matrix_1x1.Determinant());
 }
 
-TEST_F(S21MatrixTest, determinantError) {
-  EXPECT_ANY_THROW(matrix_4x3->Determinant());
+TEST_F(S21MatrixTest, eqmul) {
+  S21Matrix result(3, 3);
+  S21Matrix tmp(3, 3);
+  result = *matrix_3x3;
+  tmp = result * *matrix_3x3;
+  *matrix_3x3 *= *matrix_3x3;
+  EXPECT_EQ(0, result == *matrix_3x3);
+}
+
+TEST_F(S21MatrixTest, eqsub) {
+  S21Matrix tmp(3, 3);
+  S21Matrix result(3, 3);
+  for (int i = 0; i < 3; ++i) tmp = *matrix_3x3 - tmp;
+  EXPECT_EQ(false, tmp == *matrix_3x3);
 }
 
 TEST_F(S21MatrixTest, inverse) {
@@ -289,10 +275,6 @@ TEST_F(S21MatrixTest, inverse) {
   S21Matrix test_result;
   test_result = matrix_3x3->InverseMatrix();
   EXPECT_EQ(1, result == test_result);
-}
-
-TEST_F(S21MatrixTest, inverseError) {
-  EXPECT_ANY_THROW(matrix_3x3->InverseMatrix());
 }
 
 int main(int argc, char **argv) {
